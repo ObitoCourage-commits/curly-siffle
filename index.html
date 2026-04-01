@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
     <link rel="apple-touch-icon" href="favicon.png" />
@@ -15,10 +14,7 @@
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-WX5VS54ZDW"></script>
     <script>
       window.dataLayer = window.dataLayer || []
-
-      function gtag() {
-        dataLayer.push(arguments)
-      }
+      function gtag() { dataLayer.push(arguments) }
       gtag('js', new Date())
       gtag('config', 'G-WX5VS54ZDW')
     </script>
@@ -26,24 +22,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>gn-math</title>
     <meta name="title" content="GN-Math" />
-    <meta
-      name="description"
-      content="Play unbl*cked games like Crazy Cattle 3D and DriveMad on GN-Math. Fast, free, no downloads—perfect for school or home."
-    />
+    <meta name="description" content="Play unbl*cked games like Crazy Cattle 3D and DriveMad on GN-Math. Fast, free, no downloads—perfect for school or home." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://gn-math.github.io/" />
-    <meta property="og:title" content="GN-Math" />
-    <meta
-      property="og:description"
-      content="Play unbl*cked games like Crazy Cattle 3D and DriveMad on GN-Math. Fast, free, no downloads—perfect for school or home."
-    />
+    <meta property="og:url" content="" />
+    <meta property="og:title" content="gn-math" />
+    <meta property="og:description" content="Play unblocked games. Fast, free, no downloads—perfect for school or home." />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://gn-math.github.io/" />
-    <meta name="twitter:title" content="GN-Math" />
-    <meta
-      name="twitter:description"
-      content="Play unbl*cked games like Crazy Cattle 3D and DriveMad on GN-Math. Fast, free, no downloads—perfect for school or home."
-    />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:title" content="gn-math" />
+    <meta name="twitter:description" content="Play unbl*cked games like Crazy Cattle 3D and DriveMad on GN-Math. Fast, free, no downloads—perfect for school or home." />
     <link rel="stylesheet" href="style.css" />
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#fb2651" />
@@ -79,9 +66,7 @@
     </header>
     <main>
       <details id="featuredZonesWrapper" open>
-        <summary id="allZonesSummary" style="font-size: 1.2rem; font-weight: bold; cursor: pointer">
-          Featured Zones
-        </summary>
+        <summary id="allZonesSummary" style="font-size: 1.2rem; font-weight: bold; cursor: pointer">Featured Zones</summary>
         <div id="featuredZones" class="zone-container"></div>
       </details>
       <br />
@@ -98,17 +83,7 @@
         <div class="zone-title">
           <h2 id="zoneName">zone</h2>
           <button class="info-button" onclick="showZoneInfo()" title="Zone Information">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"></circle>
               <line x1="12" y1="16" x2="12" y2="12"></line>
               <line x1="12" y1="8" x2="12.01" y2="8"></line>
@@ -136,66 +111,49 @@
         <div id="popupBody">Content will be here</div>
       </div>
     </div>
+
     <footer>
       <div class="footer-links">
-        <a
-          href="#"
-          onclick="
-            loadDMCA()
-            return false
-          "
-          >DMCA</a
-        >
-        <a
-          href="#"
-          onclick="
-            showContact()
-            return false
-          "
-          >Contact</a
-        >
-        <a
-          href="#"
-          onclick="
-            loadPrivacy()
-            return false
-          "
-          >Privacy Policy</a
-        >
+        <a href="#" onclick="document.getElementById('updateLogOverlay').style.display='flex'; return false;">Update Log</a>
+        <a href="#" onclick="loadDMCA(); return false;">DMCA</a>
+        <a href="#" onclick="showContact(); return false;">Contact</a>
+        <a href="#" onclick="loadPrivacy(); return false;">Privacy Policy</a>
         <a href="javascript:saveData()">Export Data</a>
-        <a
-          href="#"
-          onclick="
-            document.getElementById('importData').click()
-            return false
-          "
-          >Import Data</a
-        >
+        <a href="#" onclick="document.getElementById('importData').click(); return false;">Import Data</a>
         <input type="file" id="importData" style="display: none" onchange="loadData(event)" />
       </div>
-      <div>
-        <script type="text/javascript">
-            aclib.runBanner({
-                zoneId: '10952070',
-            });
-        </script>
-      </div>
+      <div><!-- ad placeholder --></div>
     </footer>
 
-    <script src="script.js"></script>
+    <div id="updateLogOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
+      <div style="background:#1a1a2e; border:1px solid #fb2651; border-radius:10px; padding:30px; max-width:480px; width:90%; color:#fff; font-family:sans-serif; position:relative;">
+        <button onclick="document.getElementById('updateLogOverlay').style.display='none'" style="position:absolute; top:10px; right:14px; background:none; border:none; color:#fb2651; font-size:1.4rem; cursor:pointer;">×</button>
+        <h2 style="color:#fb2651; margin-top:0;">📋 Update Log</h2>
+        <hr style="border-color:#fb2651; opacity:0.3;" />
+        <p><strong>11 March 2026</strong></p>
+        <p>⚠️ Some games are currently not loading. We are aware of the issue and it will be fixed in the near future. Thank you for your patience!</p>
+        <p><strong>13 March 2026</strong></p>
+        <p>Hextris, a game about matching colors on a hexagon like Tetris, was added</p>
+        <p><strong>14 March 2026</strong></p>
+        <p>SkiFree-a game about sliding down an endless hill was added</p>
+        <p style="font-size:0.85rem; color:#aaa;">Check back soon for updates.</p>
+      </div>
+    </div>
+
+    <script src="script.js?v=5"></script>
 
     <script>
       try {
         const search = new URLSearchParams(window.location.search)
         const privacy = search.get('privacy')
-        if (privacy) {
-          loadPrivacy()
-        }
+        if (privacy) { loadPrivacy() }
       } catch (error) {}
     </script>
     <script>
-      navigator.serviceWorker.register(location.protocol + '//' + location.hostname + '/sw.js')
+      const swPath = location.pathname.substring(0, location.pathname.lastIndexOf('/') + 1) + 'sw.js'
+      navigator.serviceWorker.register(swPath).catch(function(err) {
+        console.warn('Service worker registration failed:', err)
+      })
     </script>
   </body>
 </html>
-
