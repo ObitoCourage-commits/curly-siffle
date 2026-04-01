@@ -12,7 +12,7 @@ const zonesurls = [
 let zonesURL = zonesurls[Math.floor(Math.random() * zonesurls.length)];
 const coverURL = "https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/covers@main";
 const htmlURL = "https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/html@main";
-const blockedGames = [225, 528];
+const blockedGames = [225, 528, 9022];
 const htmlOverrides = {
     114: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/114.html",
     266: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/266.html",
