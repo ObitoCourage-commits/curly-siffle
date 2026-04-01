@@ -34,24 +34,35 @@
     </div>
     <script>
         document.getElementById("game").style.display = "none";
-        function startGame() {
-            document.getElementById("game").style.display = "block";
-            document.getElementById("startButton").style.display = "none";
-            EJS_player = "#game";
-            EJS_core = "gba";
-            EJS_gameName = "Jurassic Park III: Island Attack";
-            EJS_color = "#0064ff";
-            EJS_startOnLoaded = true;
-            EJS_pathtodata = "https://cdn.jsdelivr.net/gh/a456pur/seraph@81f551ca0aa8e3d6018d32d8ac5904ac9bc78f76/storage/emulatorjs/data";
-            EJS_gameUrl = "https://raw.githubusercontent.com/ObitoCourage-commits/html/main/Jurassic%20Park%20III%3A%20Island%20Attack/Jurassic%20Park%20III%20-%20Island%20Attack%20(USA).gba";
-            EJS_biosUrl = "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/html@main/Spongebob%20Battle%20for%20Bikini%20Bottom/gba_bios.bin";
-            loadGame();
-        }
-        document.getElementById("startButton").addEventListener("click", startGame);
-        function loadGame() {
-            var script = document.createElement("script");
-            script.src = "https://cdn.jsdelivr.net/gh/a456pur/seraph@81f551ca0aa8e3d6018d32d8ac5904ac9bc78f76/storage/emulatorjs/data/loader.js";
-            document.body.appendChild(script);
-        }
+       function startGame() {
+    const gameDiv = document.getElementById("game");
+    const button = document.getElementById("startButton");
+
+    gameDiv.style.display = "block";
+    button.style.display = "none";
+
+    // ✅ MUST be on window
+    window.EJS_player = "#game";
+    window.EJS_core = "gba";
+    window.EJS_gameName = "Jurassic Park III: Island Attack";
+    window.EJS_color = "#0064ff";
+    window.EJS_startOnLoaded = true;
+
+    // ❗ TEMP: remove BIOS for testing
+    // window.EJS_biosUrl = "...";
+
+    window.EJS_gameUrl = "https://raw.githubusercontent.com/ObitoCourage-commits/html/main/Jurassic%20Park%20III%3A%20Island%20Attack/Jurassic%20Park%20III%20-%20Island%20Attack%20(USA).gba";
+
+    window.EJS_pathtodata = "https://cdn.jsdelivr.net/gh/a456pur/seraph@81f551ca0aa8e3d6018d32d8ac5904ac9bc78f76/storage/emulatorjs/data";
+
+    // ✅ LOAD AFTER everything is set
+    const script = document.createElement("script");
+    script.src = window.EJS_pathtodata + "/loader.js";
+
+    script.onload = () => console.log("Emulator loaded");
+    script.onerror = () => console.error("FAILED TO LOAD EMULATOR");
+
+    document.body.appendChild(script);
+}
     </script>
 </body>
