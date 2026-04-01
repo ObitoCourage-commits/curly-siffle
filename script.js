@@ -40,6 +40,7 @@ const htmlOverrides = {
     9023: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9023.html",
     9024: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9024.html",
     9025: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9025.html",
+    9026: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9026.html",
 };
 function getGameURL(zone) {
     if (htmlOverrides[zone.id] || htmlOverrides[Number(zone.id)]) return htmlOverrides[zone.id] || htmlOverrides[Number(zone.id)];
