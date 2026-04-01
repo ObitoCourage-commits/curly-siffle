@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+      body, html { margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background-color: #121212; color: white; font-family: Arial, sans-serif; }
+      #game-container { text-align: center; width: 100%; height: 100%; }
+      #loading-progress { font-size: 18px; margin-top: 20px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+      <div id="game"></div>
+      <div id="loading-progress">Loading: 0/0</div>
+      <div id="first-time">First-time loading may take longer...</div>
+    </div>
+    <script>
+      const BASE = "https://raw.githubusercontent.com/ObitoCourage-commits/html/main/Mortal%20Combat%20Trilogy/";
+      const GAME = "Mortal%20Kombat%20Trilogy%20(USA)%20(Rev%201)";
+
+      const totalParts = 4 + 2 + 3 + 27; // track01(4) + track06(2) + track30(3) + others(27 single files)
+      let loadedParts = 0;
+
+      function updateProgress() {
+        loadedParts++;
+        document.getElementById("loading-progress").textContent = "Loading: " + loadedParts + "/" + totalParts;
+      }
+
+      function mergeFiles(fileParts) {
+        return new Promise((resolve, reject) => {
+          let buffers = [];
+          function fetchPart(index) {
+            if (index >= fileParts.length) {
+              resolve(URL.createObjectURL(new Blob(buffers)));
+              return;
+            }
+            fetch(fileParts[index])
+              .then(r => r.arrayBuffer())
+              .then(data => {
+                buffers.push(data);
+                updateProgress();
+                setTimeout(() => fetchPart(index + 1), 50);
+              })
+              .catch(reject);
+          }
+          fetchPart(0);
+        });
+      }
+
+      function getParts(trackFolder, trackName, numParts) {
+        let parts = [];
+        for (let i = 1; i <= numParts; i++) {
+          parts.push(BASE + trackFolder + "/" + GAME + "%20(" + trackName + ").bin.part" + i);
+        }
+        return parts;
+      }
+
+      function getSingleTrack(trackFolder, trackName) {
+        return [BASE + trackFolder + "/" + GAME + "%20(" + trackName + ").bin"];
+      }
+
+      // Build all track promises
+      const trackPromises = [];
+
+      // Track 01 - 4 parts
+      trackPromises.push(mergeFiles(getParts("Track%2001", "Track%2001", 4)));
+      // Track 02-05 - single files
+      for (let i = 2; i <= 5; i++) {
+        const t = String(i).padStart(2, '0');
+        trackPromises.push(mergeFiles(getSingleTrack("Track%20" + t, "Track%20" + t)));
+      }
+      // Track 06 - 2 parts
+      trackPromises.push(mergeFiles(getParts("Track%2006", "Track%2006", 2)));
+      // Track 07-29 - single files
+      for (let i = 7; i <= 29; i++) {
+        const t = String(i).padStart(2, '0');
+        trackPromises.push(mergeFiles(getSingleTrack("Track%20" + t, "Track%20" + t)));
+      }
+      // Track 30 - 3 parts
+      trackPromises.push(mergeFiles(getParts("Track%2030", "Track%2030", 3)));
+
+      Promise.all(trackPromises).then(([track1Url, ...otherUrls]) => {
+        document.getElementById("loading-progress").remove();
+        document.getElementById("first-time").remove();
+        EJS_player = "#game";
+        EJS_core = "psx";
+        EJS_gameName = "Mortal Kombat Trilogy";
+        EJS_color = "#0064ff";
+        EJS_startOnLoaded = true;
+        EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
+        EJS_gameUrl = track1Url;
+        EJS_biosUrl = BASE + "Mortal%20Kombat%20Trilogy%20(USA)%20(Rev%201).cue";
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";
+        document.body.appendChild(script);
+      }).catch(err => {
+        console.error(err);
+        document.getElementById("loading-progress").textContent = "Error loading game.";
+      });
+    </script>
+</body>
+</html>

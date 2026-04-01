@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Resident Evil 3: Nemesis</title>
+    <style>
+        body, html {
+            margin: 0; padding: 0; height: 100%; background: #121212; color: white;
+            font-family: Arial, sans-serif; display: flex; align-items: center; justify-content: center;
+        }
+        #game-container { text-align: center; width: 100%; height: 100%; }
+        #loading-progress {
+            font-size: 18px; margin: 20px; padding: 12px 20px;
+            background: rgba(255,255,255,0.1); border-radius: 8px; display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="game"></div>
+        <div id="loading-progress">Loading: 0/30</div>
+        <div id="first-time" style="margin-top:10px; font-size:14px; opacity:0.8;">
+            First-time loading may take longer due to large file size...
+        </div>
+    </div>
+
+    <script>
+        window.gameconfig = {
+            name: "Resident Evil 3: Nemesis",
+            baseUrl: "https://raw.githubusercontent.com/ObitoCourage-commits/html/main/Resident%20Evil%203%3A%20Nemesis/Resident%20Evil%203%20-%20Nemesis%20(USA%2C%20Canada).bin",
+            core: "psx",
+            min: 1,
+            max: 37
+        };
+
+        function getParts(base, start, end) {
+            let parts = [];
+            for (let i = start; i <= end; i++) {
+                let padded = String(i).padStart(2, '0');   // Makes .part01, .part02, ..., .part30
+                parts.push(base + ".part" + padded);
+            }
+            return parts;
+        }
+
+        function mergeFiles(fileParts) {
+            return new Promise((resolve, reject) => {
+                let buffers = [];
+                let loaded = 0;
+                const total = fileParts.length;
+
+                function updateProgress() {
+                    const el = document.getElementById("loading-progress");
+                    el.textContent = `Loading: ${loaded}/${total}`;
+                }
+
+                function fetchPart(index) {
+                    if (index >= fileParts.length) {
+                        const mergedBlob = new Blob(buffers);
+                        resolve(URL.createObjectURL(mergedBlob));
+                        return;
+                    }
+
+                    fetch(fileParts[index] + '?v=20260327', { cache: 'no-store' })
+                        .then(r => {
+                            if (!r.ok) throw new Error(`Failed to load part ${index+1} (HTTP ${r.status})`);
+                            return r.arrayBuffer();
+                        })
+                        .then(data => {
+                            buffers.push(data);
+                            loaded++;
+                            updateProgress();
+                            fetchPart(index + 1);
+                        })
+                        .catch(err => reject(err));
+                }
+
+                updateProgress();
+                fetchPart(0);
+            });
+        }
+
+        // Start loading
+        const parts = getParts(window.gameconfig.baseUrl, window.gameconfig.min, window.gameconfig.max);
+
+        mergeFiles(parts).then(gameUrl => {
+            console.log("✅ Game merged successfully");
+
+            // Remove loading elements
+            document.getElementById("loading-progress").remove();
+            document.getElementById("first-time").remove();
+
+            // EmulatorJS configuration
+            EJS_player = "#game";
+            EJS_core = window.gameconfig.core;
+            EJS_gameName = window.gameconfig.name;
+            EJS_color = "#0064ff";
+            EJS_startOnLoaded = true;
+            EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
+            EJS_gameUrl = gameUrl;                    // Use the merged blob URL
+
+            // Load the emulator
+            const script = document.createElement("script");
+            script.src = "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";
+            document.body.appendChild(script);
+
+        }).catch(err => {
+            console.error("Merge failed:", err);
+            document.getElementById("loading-progress").innerHTML = 
+                `Error loading game.<br><small style="color:#ff6666;">${err.message}</small>`;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<html>
+<head>
+    <style>
+      body, html { margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background-color: #121212; color: white; font-family: Arial, sans-serif; }
+      #game-container { text-align: center; width: 100%; height: 100%; }
+      #loading-progress { font-size: 18px; margin-top: 20px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+      <div id="game"></div>
+      <div id="loading-progress">Loading: 0/0</div>
+      <div id="first-time">First-time loading may take longer...</div>
+    </div>
+    <script>
+      const BASE = "https://raw.githubusercontent.com/ObitoCourage-commits/html/main/Tekken%203/";
+
+      function mergeFiles(fileParts, cb) {
+        return new Promise((resolve, reject) => {
+          let buffers = [];
+          function fetchPart(index) {
+            if (index >= fileParts.length) {
+              let mergedBlob = new Blob(buffers);
+              resolve(URL.createObjectURL(mergedBlob));
+              return;
+            }
+            fetch(fileParts[index])
+              .then(r => r.arrayBuffer())
+              .then(data => {
+                buffers.push(data);
+                if (cb) cb(index);
+                setTimeout(() => fetchPart(index + 1), 50);
+              })
+              .catch(reject);
+          }
+          fetchPart(0);
+        });
+      }
+
+      function getParts(base, name, start, end, padLength) {
+        let parts = [];
+        for (let i = start; i <= end; i++) {
+          let padded = String(i).padStart(padLength, '0');
+          parts.push(base + encodeURIComponent(name + ".part" + padded));
+        }
+        return parts;
+      }
+
+      const totalParts = 33 + 2 + 2;
+      let loadedParts = 0;
+
+      function updateProgress() {
+        loadedParts++;
+        document.getElementById("loading-progress").textContent = `Loading: ${loadedParts}/${totalParts}`;
+      }
+Promise.all([
+    mergeFiles(getParts(BASE + "Track%201/", "Tekken 3 (USA) (Track 1).bin", 1, 33, 2), updateProgress),
+    mergeFiles(getParts(BASE + "Track%202/", "Tekken 3 (USA) (Track 2).bin", 1, 2, 1), updateProgress),
+    mergeFiles(getParts(BASE + "Track%203/", "Tekken 3 (USA) (Track 3).bin", 1, 2, 1), updateProgress)
+])
+      ]).then(([track1Url, track2Url, track3Url]) => {
+        document.getElementById("loading-progress").remove();
+        document.getElementById("first-time").remove();
+
+        EJS_player = "#game";
+        EJS_core = "psx";
+        EJS_gameName = "Tekken 3";
+        EJS_color = "#0064ff";
+        EJS_startOnLoaded = true;
+        EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
+        EJS_gameUrl = track1Url;
+        EJS_biosUrl = BASE + "Tekken%203%20(USA).cue";
+        EJS_multidisk = {
+          disks: [track1Url, track2Url, track3Url]
+        };
+
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";
+        document.body.appendChild(script);
+      }).catch(err => {
+        console.error(err);
+        document.getElementById("loading-progress").textContent = "Error loading game.";
+      });
+    </script>
+</body>
+</html>
