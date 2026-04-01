@@ -15,7 +15,7 @@ const htmlURL = "https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/html@main";
 const blockedGames = [225, 528];
 const htmlOverrides = {
     114: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-sniffle@main/114.html",
-    266: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-sniffle@main/266.html",
+    266: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curlyi-sniffle@main/266.html",
     9000: "https://raw.githubusercontent.com/ObitoCourage-commits/curly-sniffle/main/9000.html?t=" + Date.now(),
     9001: "https://raw.githubusercontent.com/ObitoCourage-commits/curly-sniffle/main/9001.html",
     9002: "https://raw.githubusercontent.com/ObitoCourage-commits/curly-sniffle/main/9002.html",
