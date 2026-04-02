@@ -41,8 +41,8 @@ const htmlOverrides = {
     9024: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9024.html",
     9025: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9025.html",
     9026: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9026.html?t=" + Date.now(),
-    9027: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9027.html"
-    9028: "https://raw.githubusercontent.com/ObitoCourage-commits/curly-siffle/main/9028.html"
+    9027: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9027.html",
+    9028: "https://raw.githubusercontent.com/ObitoCourage-commits/curly-siffle/main/9028.html?t=" + Date.now(),
     9029: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9029.html",
     9030: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9030.html",
     9031: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9031.html",
@@ -50,7 +50,6 @@ const htmlOverrides = {
     9033: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9033.html",
     9034: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9034.html",
     9035: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9035.html",
-};
 function getGameURL(zone) {
     if (htmlOverrides[zone.id] || htmlOverrides[Number(zone.id)]) return htmlOverrides[zone.id] || htmlOverrides[Number(zone.id)];
     return zone.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
