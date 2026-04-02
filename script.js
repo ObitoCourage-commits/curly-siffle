@@ -40,8 +40,8 @@ const htmlOverrides = {
     9023: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9023.html",
     9024: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9024.html",
     9025: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9025.html",
-    9026: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9026.html",
-    9027: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9027.html",
+    9026: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9026.html?t=" + Date.now(),
+    9027: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9027.html"
     9028: "https://raw.githubusercontent.com/ObitoCourage-commits/curly-siffle/main/9028.html?t=" + Date.now(),
     9029: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9029.html",
     9030: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9030.html",
