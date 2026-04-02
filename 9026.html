@@ -4,72 +4,30 @@
     <style>
       body, html { margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background-color: #121212; color: white; font-family: Arial, sans-serif; }
       #game-container { text-align: center; width: 100%; height: 100%; }
-      #loading-progress { font-size: 18px; margin-top: 20px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; display: inline-block; }
     </style>
 </head>
 <body>
     <div id="game-container">
       <div id="game"></div>
-      <div id="loading-progress">Loading: 0/0</div>
-      <div id="first-time">First-time loading may take longer...</div>
     </div>
     <script>
-      const BASE = "https://raw.githubusercontent.com/ObitoCourage-commits/html/main/Monster%20Jam/";
       const BIOS = "https://raw.githubusercontent.com/ObitoCourage-commits/html/main/nds%20bios/";
 
-      function mergeFiles(fileParts) {
-        return new Promise((resolve, reject) => {
-          let buffers = [];
-          let totalParts = fileParts.length;
-          let loaded = 0;
-          function fetchPart(index) {
-            if (index >= fileParts.length) {
-              resolve(URL.createObjectURL(new Blob(buffers)));
-              return;
-            }
-            fetch(fileParts[index])
-              .then(r => r.arrayBuffer())
-              .then(data => {
-                buffers.push(data);
-                loaded++;
-                document.getElementById("loading-progress").textContent = "Loading: " + loaded + "/" + totalParts;
-                setTimeout(() => fetchPart(index + 1), 50);
-              })
-              .catch(reject);
-          }
-          fetchPart(0);
-        });
-      }
+      EJS_player = "#game";
+      EJS_core = "nds";
+      EJS_gameName = "Monster Jam";
+      EJS_color = "#0064ff";
+      EJS_startOnLoaded = true;
+      EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
+      EJS_gameUrl = "https://archive.org/download/monster-jam-usa/Monster%20Jam%20%28USA%29.nds";
+      EJS_biosUrl = BIOS + "biosnds7.rom";
+      EJS_bios7Url = BIOS + "biosnds7.rom";
+      EJS_bios9Url = BIOS + "biosnds9.rom";
+      EJS_firmwareUrl = BIOS + "firmware.bin";
 
-      const parts = [
-        BASE + "Monster%20Jam%20(USA).nds.part1",
-        BASE + "Monster%20Jam%20(USA).nds.part2",
-        BASE + "Monster%20Jam%20(USA).nds.part3"
-      ];
-
-      mergeFiles(parts).then(gameUrl => {
-        document.getElementById("loading-progress").remove();
-        document.getElementById("first-time").remove();
-
-        EJS_player = "#game";
-        EJS_core = "nds";
-        EJS_gameName = "Monster Jam";
-        EJS_color = "#0064ff";
-        EJS_startOnLoaded = true;
-        EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
-        EJS_gameUrl = gameUrl;
-        EJS_biosUrl = BIOS + "biosnds7.rom";
-        EJS_bios7Url = BIOS + "biosnds7.rom";
-        EJS_bios9Url = BIOS + "biosnds9.rom";
-        EJS_firmwareUrl = BIOS + "firmware.bin";
-
-        const script = document.createElement("script");
-        script.src = "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";
-        document.body.appendChild(script);
-      }).catch(err => {
-        console.error(err);
-        document.getElementById("loading-progress").textContent = "Error loading game.";
-      });
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";
+      document.body.appendChild(script);
     </script>
 </body>
 </html>
