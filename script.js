@@ -50,6 +50,7 @@ const htmlOverrides = {
     9033: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9033.html",
     9034: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9034.html",
     9035: "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/curly-siffle@main/9035.html",
+};
 function getGameURL(zone) {
     if (htmlOverrides[zone.id] || htmlOverrides[Number(zone.id)]) return htmlOverrides[zone.id] || htmlOverrides[Number(zone.id)];
     return zone.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
